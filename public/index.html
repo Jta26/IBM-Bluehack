@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bluehack Demo</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/7.2.2/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/7.2.2/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.2.2/firebase-database.js"></script>
+    <script defer src="/__/firebase/7.2.2/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/7.2.2/firebase-storage.js"></script>
+    <script defer src="/__/firebase/7.2.2/firebase-firestore.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+    <link rel="stylesheet" href='main.css'/>
+  </head>
+  <body>
+    <div id='demo-container'>
+      <img src="logo.png"/>
+      <ul id='demo-list'>
+
+      </ul>
+    </div>
+    <button onclick='add()'>test</button>
+    <script src='index.js'></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // // The Firebase SDK is initialized and available here!
+        //
+        // firebase.auth().onAuthStateChanged(user => { });
+        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+        // firebase.messaging().requestPermission().then(() => { });
+        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        //
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        let db = firebase.firestore();
+        let dbRef = db.collection('dialog');
+        let list = document.getElementById('demo-list');
+
+        dbRef.onSnapshot((snap) => {
+          snap.docChanges().forEach((change) => {
+            console.log(change);
+            if(change.type == 'added') {
+              let newChild = document.createElement('li');
+              let changeDoc = change.doc.data();
+              newChild.innerHTML = changeDoc.text;
+              newChild.className = 'demo-card';
+              list.prepend(newChild);
+              if (changeDoc.text.includes("Metformin")) {
+                
+                let eduDiv = document.createElement('div');
+                eduDiv.id = 'demo-info';
+                newChild.append(eduDiv);
+                //maybe do style
+                let printicon = document.createElement('img');
+                printicon.style.width = '3%';
+                printicon.style.cssFloat = 'right';
+                printicon.src = 'print.jpg';
+                eduDiv.append(printicon);
+                let eduHead = document.createElement('h3');
+                
+                eduHead.innerHTML = 'Patient Take-Home Info';
+                let educationInfo = document.createElement('p');
+                educationInfo.innerHTML = `Metformin is used to treat high blood sugar levels that are caused by a type of diabetes mellitus or sugar diabetes called type 2 diabetes. With this type of diabetes, insulin produced by the pancreas is not able to get sugar into the cells of the body where it can work properly. Using metformin alone, with a type of oral antidiabetic medicine called a sulfonylurea, or with insulin, will help to lower blood sugar when it is too high and help restore the way you use food to make energy.
+
+Many people can control type 2 diabetes with diet and exercise. Following a specially planned diet and exercise will always be important when you have diabetes, even when you are taking medicines. To work properly, the amount of metformin you take must be balanced against the amount and type of food you eat and the amount of exercise you do. If you change your diet or exercise, you will want to test your blood sugar to find out if it is too low. Your doctor will teach you what to do if this happens.
+
+Metformin does not help patients who have insulin-dependent or type 1 diabetes because they cannot produce insulin from their pancreas gland. Their blood glucose is best controlled by insulin injections.
+
+This medicine is available only with your doctor's prescription.`
+
+                eduDiv.style.width = '90%';
+                eduDiv.style.margin = 'auto';
+                eduDiv.style.padding = '20px';
+                eduDiv.style.lineHeight = '30px';
+
+                eduDiv.style.boxShadow = '#A5CC6B 1px 1px 5px';
+                eduDiv.style.fontSize = '.5em';
+
+
+                eduDiv.appendChild(eduHead);
+                eduDiv.appendChild(educationInfo);
+                
+               
+                console.log(newChild);
+              }
+            }
+          });
+        });
+        dbRef.onSnapshot((snap) => {
+          
+        })
+        // try {
+        //   let app = firebase.app();
+        //   let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+        //   document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        // } catch (e) {
+        //   console.error(e);
+        //   document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+        // }
+      });
+    </script>
+  </body>
+</html>

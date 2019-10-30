@@ -1,0 +1,53 @@
+
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+
+body {
+    background-color: #F9F9F9;
+    font-family: Nunito, sans-serif;
+}
+
+#demo-container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 2s ease;
+}
+#demo-list {
+    transition: all 3s ease;
+}   
+#demo-container img {
+    width: 15%;
+}
+
+.demo-card {
+    background-color: #FFF;
+    box-shadow: #5D75F7 1px 1px 7px;
+    margin: 20px;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 3em;
+    list-style-type: none;
+    /* transition: all ease 3s; */
+    animation: slide-down 1s ease;
+    line-height: 150px;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal !important;
+}
+
+.demo-card .demo-info {
+    line-height: 12px;
+}
+
+@keyframes slide-down {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
